@@ -8,7 +8,7 @@ const japanese = document.getElementById("japanese");
 const choices = document.getElementById("choices");
 const courseOption = document.getElementById("courseOption");
 const resultNode = document.getElementById("result");
-const gameTime = 180;
+const gameTime = 120;
 const mode = document.getElementById("mode");
 let typeTimer;
 // https://dova-s.jp/bgm/play16041.html
