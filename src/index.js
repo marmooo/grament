@@ -11,7 +11,7 @@ const resultNode = document.getElementById("result");
 const gameTime = 180;
 const mode = document.getElementById("mode");
 let typeTimer;
-// https://dova-s.jp/bgm/play14609.html
+// https://dova-s.jp/bgm/play16041.html
 const bgm = new Audio("mp3/bgm.mp3");
 bgm.volume = 0.1;
 bgm.loop = true;
