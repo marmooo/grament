@@ -1,4 +1,4 @@
-var CACHE_NAME = '2022-04-06 09:00';
+var CACHE_NAME = '2022-04-25 07:30';
 var urlsToCache = [
   "/grament/",
   "/grament/index.js",
@@ -8,7 +8,7 @@ var urlsToCache = [
   "/grament/mp3/end.mp3",
   "/grament/mp3/keyboard.mp3",
   "/grament/index.js",
-  "/grament/favicon/original.svg",
+  "/grament/favicon/favicon.svg",
   "https://marmooo.github.io/fonts/textar-light.woff2",
   "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css",
 ];
