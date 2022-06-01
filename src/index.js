@@ -331,6 +331,7 @@ function addResult(en, ja) {
   const jaNode = document.createElement("td");
   enNode.textContent = en;
   jaNode.textContent = ja;
+  enNode.className = "notranslate";
   tr.appendChild(enNode);
   tr.appendChild(jaNode);
   resultNode.appendChild(tr);
@@ -392,10 +393,9 @@ function startGame() {
 function startTypeTimer() {
   const timeNode = document.getElementById("time");
   typeTimer = setInterval(function () {
-    const arr = timeNode.textContent.split("秒 /");
-    const t = parseInt(arr[0]);
+    const t = parseInt(timeNode.textContent);
     if (t > 0) {
-      timeNode.textContent = (t - 1) + "秒 /" + arr[1];
+      timeNode.textContent = t - 1;
     } else {
       clearInterval(typeTimer);
       bgm.pause();
@@ -409,8 +409,7 @@ function startTypeTimer() {
 }
 
 function initTime() {
-  document.getElementById("time").textContent = gameTime + "秒 / " + gameTime +
-    "秒";
+  document.getElementById("time").textContent = gameTime;
 }
 
 function scoring() {
