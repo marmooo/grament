@@ -111,13 +111,13 @@ function loadAudios() {
 
 function loadVoices() {
   // https://stackoverflow.com/questions/21513706/
-  const allVoicesObtained = new Promise(function (resolve) {
+  const allVoicesObtained = new Promise((resolve) => {
     let voices = speechSynthesis.getVoices();
     if (voices.length !== 0) {
       resolve(voices);
     } else {
       let supported = false;
-      speechSynthesis.addEventListener("voiceschanged", function () {
+      speechSynthesis.addEventListener("voiceschanged", () => {
         supported = true;
         voices = speechSynthesis.getVoices();
         resolve(voices);
@@ -155,9 +155,9 @@ function loadProblems() {
         const ja = jaStr.split("|").slice(0, 3).join("\n");
         return { en: en, ja: ja };
       });
-  }).catch(function (err) {
-    console.error(err);
-  });
+    }).catch((err) => {
+      console.error(err);
+    });
 }
 
 function nextProblem() {
@@ -359,7 +359,7 @@ function countdown() {
   scorePanel.hidden = true;
   counter.textContent = 3;
   startButton.removeEventListener("click", replay);
-  const timer = setInterval(function () {
+  const timer = setInterval(() => {
     const counter = document.getElementById("counter");
     const colors = ["skyblue", "greenyellow", "violet", "tomato"];
     if (parseInt(counter.textContent) > 1) {
@@ -392,7 +392,7 @@ function startGame() {
 
 function startTypeTimer() {
   const timeNode = document.getElementById("time");
-  typeTimer = setInterval(function () {
+  typeTimer = setInterval(() => {
     const t = parseInt(timeNode.textContent);
     if (t > 0) {
       timeNode.textContent = t - 1;
@@ -419,16 +419,16 @@ function scoring() {
 
 document.getElementById("toggleDarkMode").onclick = toggleDarkMode;
 document.getElementById("toggleBGM").onclick = toggleBGM;
-document.getElementById("answerButton").onclick = function () {
+document.getElementById("answerButton").onclick = () => {
   answer.classList.remove("d-none");
   mistaken = true;
 };
-document.getElementById("voice").onclick = function () {
+document.getElementById("voice").onclick = () => {
   loopVoice(answer.textContent, 1);
 };
 startButton.addEventListener("click", startGame);
 setChoices(romaNode.textContent, choices);
-mode.onclick = function () {
+mode.onclick = () => {
   mode.textContent = (mode.textContent == "EASY") ? "HARD" : "EASY";
 };
 document.addEventListener("click", unlockAudio, {
