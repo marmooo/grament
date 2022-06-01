@@ -1,7 +1,6 @@
 const playPanel = document.getElementById("playPanel");
 const countPanel = document.getElementById("countPanel");
 const scorePanel = document.getElementById("scorePanel");
-const startButton = document.getElementById("startButton");
 const answer = document.getElementById("answer");
 const romaNode = document.getElementById("roma");
 const japanese = document.getElementById("japanese");
@@ -173,19 +172,6 @@ function nextProblem() {
   selectable();
 }
 
-function replay() {
-  clearInterval(typeTimer);
-  initTime();
-  loadProblems();
-  countdown();
-  wordsCount = problemCount = errorCount = 0;
-  countPanel.hidden = false;
-  scorePanel.hidden = true;
-  while (resultNode.firstChild) {
-    resultNode.removeChild(resultNode.firstChild);
-  }
-}
-
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -353,12 +339,11 @@ function selectable() {
 }
 
 function countdown() {
-  problemCount = errorCount = 0;
+  wordsCount = problemCount = errorCount = 0;
+  countPanel.classList.remove("d-none");
   playPanel.classList.add("d-none");
-  countPanel.hidden = false;
-  scorePanel.hidden = true;
+  scorePanel.classList.add("d-none");
   counter.textContent = 3;
-  startButton.removeEventListener("click", replay);
   const timer = setInterval(() => {
     const counter = document.getElementById("counter");
     const colors = ["skyblue", "greenyellow", "violet", "tomato"];
@@ -368,29 +353,28 @@ function countdown() {
       counter.textContent = t;
     } else {
       clearInterval(timer);
-      countPanel.hidden = true;
-      scorePanel.hidden = true;
+      countPanel.classList.add("d-none");
       playPanel.classList.remove("d-none");
       selectable();
-      startTypeTimer();
+      startGameTimer();
       if (localStorage.getItem("bgm") == 1) {
         bgm.play();
       }
-      startButton.addEventListener("click", replay);
     }
   }, 1000);
 }
 
-function startGame() {
+function replay() {
   clearInterval(typeTimer);
-  startButton.removeEventListener("click", startGame);
-  startButton.addEventListener("click", replay);
   initTime();
   loadProblems();
   countdown();
+  while (resultNode.firstChild) {
+    resultNode.removeChild(resultNode.firstChild);
+  }
 }
 
-function startTypeTimer() {
+function startGameTimer() {
   const timeNode = document.getElementById("time");
   typeTimer = setInterval(() => {
     const t = parseInt(timeNode.textContent);
@@ -401,8 +385,7 @@ function startTypeTimer() {
       bgm.pause();
       playAudio(endAudio);
       playPanel.classList.add("d-none");
-      countPanel.hidden = true;
-      scorePanel.hidden = false;
+      scorePanel.classList.remove("d-none");
       scoring();
     }
   }, 1000);
@@ -417,19 +400,28 @@ function scoring() {
   document.getElementById("count").textContent = problemCount;
 }
 
-document.getElementById("toggleDarkMode").onclick = toggleDarkMode;
-document.getElementById("toggleBGM").onclick = toggleBGM;
-document.getElementById("answerButton").onclick = () => {
+function showAnswer() {
   answer.classList.remove("d-none");
   mistaken = true;
-};
+}
+
+function changeMode() {
+  if (this.textContent == "EASY") {
+    this.textContent = "HARD";
+  } else {
+    this.textContent = "EASY";
+  }
+}
+
+setChoices(romaNode.textContent, choices);
+
+mode.onclick = changeMode;
+document.getElementById("toggleDarkMode").onclick = toggleDarkMode;
+document.getElementById("toggleBGM").onclick = toggleBGM;
+document.getElementById("startButton").onclick = replay;
+document.getElementById("answerButton").onclick = showAnswer;
 document.getElementById("voice").onclick = () => {
   loopVoice(answer.textContent, 1);
-};
-startButton.addEventListener("click", startGame);
-setChoices(romaNode.textContent, choices);
-mode.onclick = () => {
-  mode.textContent = (mode.textContent == "EASY") ? "HARD" : "EASY";
 };
 document.addEventListener("click", unlockAudio, {
   once: true,
