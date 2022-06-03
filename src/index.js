@@ -9,7 +9,7 @@ const courseOption = document.getElementById("courseOption");
 const resultNode = document.getElementById("result");
 const gameTime = 120;
 const mode = document.getElementById("mode");
-let typeTimer;
+let gameTimer;
 // https://dova-s.jp/bgm/play16041.html
 const bgm = new Audio("mp3/bgm.mp3");
 bgm.volume = 0.1;
@@ -365,7 +365,7 @@ function countdown() {
 }
 
 function replay() {
-  clearInterval(typeTimer);
+  clearInterval(gameTimer);
   initTime();
   loadProblems();
   countdown();
@@ -376,12 +376,12 @@ function replay() {
 
 function startGameTimer() {
   const timeNode = document.getElementById("time");
-  typeTimer = setInterval(() => {
+  gameTimer = setInterval(() => {
     const t = parseInt(timeNode.textContent);
     if (t > 0) {
       timeNode.textContent = t - 1;
     } else {
-      clearInterval(typeTimer);
+      clearInterval(gameTimer);
       bgm.pause();
       playAudio(endAudio);
       playPanel.classList.add("d-none");
