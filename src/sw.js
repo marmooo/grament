@@ -1,4 +1,4 @@
-var CACHE_NAME = "2022-09-28 09:35";
+var CACHE_NAME = "2022-10-08 11:03";
 var urlsToCache = [
   "/grament/",
   "/grament/index.js",
@@ -10,7 +10,7 @@ var urlsToCache = [
   "/grament/index.js",
   "/grament/favicon/favicon.svg",
   "https://marmooo.github.io/fonts/textar-light.woff2",
-  "https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css",
+  "https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css",
 ];
 
 self.addEventListener("install", function (event) {
