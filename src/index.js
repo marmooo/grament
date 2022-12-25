@@ -341,6 +341,9 @@ function countdown() {
   countPanel.classList.remove("d-none");
   playPanel.classList.add("d-none");
   scorePanel.classList.add("d-none");
+  while (resultNode.firstChild) {
+    resultNode.removeChild(resultNode.firstChild);
+  }
   counter.textContent = 3;
   const timer = setInterval(() => {
     const counter = document.getElementById("counter");
@@ -362,14 +365,11 @@ function countdown() {
   }, 1000);
 }
 
-function replay() {
+function startGame() {
   clearInterval(gameTimer);
   initTime();
   loadProblems();
   countdown();
-  while (resultNode.firstChild) {
-    resultNode.removeChild(resultNode.firstChild);
-  }
 }
 
 function startGameTimer() {
@@ -416,7 +416,7 @@ setChoices(romaNode.textContent, choices);
 mode.onclick = changeMode;
 document.getElementById("toggleDarkMode").onclick = toggleDarkMode;
 document.getElementById("toggleBGM").onclick = toggleBGM;
-document.getElementById("startButton").onclick = replay;
+document.getElementById("startButton").onclick = startGame;
 document.getElementById("answerButton").onclick = showAnswer;
 document.getElementById("voice").onclick = () => {
   loopVoice(answer.textContent, 1);
