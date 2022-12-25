@@ -339,6 +339,7 @@ function selectable() {
 function countdown() {
   wordsCount = problemCount = errorCount = 0;
   countPanel.classList.remove("d-none");
+  infoPanel.classList.add("d-none");
   playPanel.classList.add("d-none");
   scorePanel.classList.add("d-none");
   while (resultNode.firstChild) {
@@ -355,6 +356,7 @@ function countdown() {
     } else {
       clearInterval(timer);
       countPanel.classList.add("d-none");
+      infoPanel.classList.remove("d-none");
       playPanel.classList.remove("d-none");
       selectable();
       startGameTimer();
