@@ -205,12 +205,13 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function selectableWordClickEvent() {
-  if (this.parentNode == romaNode) {
-    if (this.textContent != "　") {
+function selectableWordClickEvent(event) {
+  const node = event.target;
+  if (node.parentNode == romaNode) {
+    if (node.textContent != "　") {
       const romaChildren = [...romaNode.children];
       const choicesChildren = [...choices.children];
-      const romaPos = romaChildren.findIndex((e) => e == this);
+      const romaPos = romaChildren.findIndex((e) => e == node);
       let count = 0;
       romaChildren.slice(romaPos).forEach((e) => {
         if (e.hasAttribute("data-pos")) {
@@ -227,7 +228,7 @@ function selectableWordClickEvent() {
   } else {
     const pos = wordsCount;
     const romaChildren = [...romaNode.children];
-    let roma = this.textContent;
+    let roma = node.textContent;
     if (pos == 0) {
       roma = capitalizeFirstLetter(roma);
     } else {
@@ -242,9 +243,9 @@ function selectableWordClickEvent() {
       }
     }
     romaChildren[pos].textContent = roma;
-    romaChildren[pos].dataset.id = this.dataset.id;
-    romaChildren[pos].dataset.pos = this.dataset.pos;
-    this.classList.add("d-none");
+    romaChildren[pos].dataset.id = node.dataset.id;
+    romaChildren[pos].dataset.pos = node.dataset.pos;
+    node.classList.add("d-none");
     wordsCount += 1;
     if (wordsCount == choices.children.length) {
       const correctAll = romaChildren.every((e, i) => {
@@ -420,11 +421,11 @@ function showAnswer() {
   mistaken = true;
 }
 
-function changeMode() {
-  if (this.textContent == "EASY") {
-    this.textContent = "HARD";
+function changeMode(event) {
+  if (event.target.textContent == "EASY") {
+    event.target.textContent = "HARD";
   } else {
-    this.textContent = "EASY";
+    event.target.textContent = "EASY";
   }
 }
 
