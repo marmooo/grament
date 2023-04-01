@@ -1,4 +1,4 @@
-var CACHE_NAME = "2023-04-02 00:00";
+var CACHE_NAME = "2023-04-02 00:20";
 var urlsToCache = [
   "/grament/",
   "/grament/index.js",
