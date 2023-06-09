@@ -40,7 +40,6 @@
         font-display: swap;
       }
       .choice { touch-action:manipulation; }
-      html,body { height:100%; }
       pre.aa {
         font-size: 1rem;
         display: inline-block;
@@ -246,7 +245,10 @@ sudo apt install festival speech-dispatcher-festival</code></pre>
 　 しー-Ｊ　　　　　　　　　　　　　(´･ω･｀) 
         </pre>
         <table class="table table-striped w-auto mx-auto">
-          <tbody id="result"></tbody>
+          <tbody id="result">
+            <tr><td class="notranslate">What do you do after lunch?</td><td>あなたは昼食後に何をしていますか？</td></tr>
+            <tr class="table-danger"><td class="notranslate">You aren't an artist.</td><td>あなたはアーティストではありません。</td></tr>
+          </tbody>
         </table>
       </div>
       <div id="playPanel" class="text-center">
@@ -261,7 +263,12 @@ sudo apt install festival speech-dispatcher-festival</code></pre>
             </div>
             <div id="answer" class="pt-3 d-none notranslate">Let's play sorting problems!</div>
             <div id="roma" class="pt-3 notranslate">Let's play sorting problems!</div>
-            <div id="choices" class="pt-3 notranslate"></div>
+            <div id="choices" class="pt-3 notranslate">
+              <button class="btn btn-light btn-lg m-1 px-2 choice" data-id="3" data-pos="0">problems</button>
+              <button class="btn btn-light btn-lg m-1 px-2 choice" data-id="0" data-pos="1">let's</button>
+              <button class="btn btn-light btn-lg m-1 px-2 choice" data-id="2" data-pos="2">sorting</button>
+              <button class="btn btn-light btn-lg m-1 px-2 choice" data-id="1" data-pos="3">play</button>
+            </div>
           </div>
         </div>
       </div>

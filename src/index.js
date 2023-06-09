@@ -264,7 +264,7 @@ function selectableWordClickEvent(event) {
 }
 
 function initSelectableWord() {
-  const span = document.createElement("btn");
+  const span = document.createElement("button");
   span.className = "btn btn-light btn-lg m-1 px-2 choice";
   return span;
 }
@@ -428,8 +428,6 @@ function changeMode(event) {
     event.target.textContent = "EASY";
   }
 }
-
-setChoices(romaNode.textContent, choices);
 
 mode.onclick = changeMode;
 document.getElementById("toggleDarkMode").onclick = toggleDarkMode;
