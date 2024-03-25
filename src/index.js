@@ -1,3 +1,5 @@
+import { Collapse } from "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/+esm";
+
 const playPanel = document.getElementById("playPanel");
 const infoPanel = document.getElementById("infoPanel");
 const countPanel = document.getElementById("countPanel");
@@ -430,6 +432,7 @@ function changeMode(event) {
   }
 }
 
+new Collapse(document.getElementById("courseOption"), { toggle: false });
 mode.onclick = changeMode;
 document.getElementById("toggleDarkMode").onclick = toggleDarkMode;
 document.getElementById("toggleBGM").onclick = toggleBGM;
