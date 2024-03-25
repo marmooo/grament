@@ -432,6 +432,7 @@ function changeMode(event) {
   }
 }
 
+new Collapse(document.getElementById("courseOption"), { toggle: false });
 mode.onclick = changeMode;
 document.getElementById("toggleDarkMode").onclick = toggleDarkMode;
 document.getElementById("toggleBGM").onclick = toggleBGM;
