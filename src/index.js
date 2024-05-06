@@ -357,6 +357,7 @@ function selectable() {
 
 function countdown() {
   wordsCount = problemCount = errorCount = 0;
+  if (localStorage.getItem("bgm") == 1) bgm.play();
   countPanel.classList.remove("d-none");
   infoPanel.classList.add("d-none");
   playPanel.classList.add("d-none");
@@ -379,9 +380,6 @@ function countdown() {
       playPanel.classList.remove("d-none");
       selectable();
       startGameTimer();
-      if (localStorage.getItem("bgm") == 1) {
-        bgm.play();
-      }
     }
   }, 1000);
 }
