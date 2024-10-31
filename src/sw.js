@@ -1,4 +1,4 @@
-const CACHE_NAME = "2024-05-23 09:40";
+const CACHE_NAME = "2024-10-31 10:00";
 const urlsToCache = [
   "/grament/",
   "/grament/index.js",
