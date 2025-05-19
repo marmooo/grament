@@ -183,19 +183,15 @@ function loopVoice(text, n) {
   }
 }
 
-function loadProblems() {
+async function loadProblems() {
   const course = courseOption.radio.value;
-  fetch(`data/${course}.tsv`)
-    .then((response) => response.text())
-    .then((tsv) => {
-      problems = tsv.trim().split("\n").map((line) => {
-        const [en, jaStr] = line.split("\t");
-        const ja = jaStr.split("|").slice(0, 3).join("\n");
-        return { en: en, ja: ja };
-      });
-    }).catch((err) => {
-      console.error(err);
-    });
+  const response = await fetch(`data/${course}.tsv`);
+  const tsv = response.text();
+  problems = tsv.trim().split("\n").map((line) => {
+    const [en, jaStr] = line.split("\t");
+    const ja = jaStr.split("|").slice(0, 3).join("\n");
+    return { en: en, ja: ja };
+  });
 }
 
 function nextProblem() {
@@ -405,10 +401,10 @@ function countdown() {
   }, 1000);
 }
 
-function startGame() {
+async function startGame() {
   clearInterval(gameTimer);
   initTime();
-  loadProblems();
+  await loadProblems();
   countdown();
 }
 
