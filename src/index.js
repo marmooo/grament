@@ -186,7 +186,7 @@ function loopVoice(text, n) {
 async function loadProblems() {
   const course = courseOption.radio.value;
   const response = await fetch(`data/${course}.tsv`);
-  const tsv = response.text();
+  const tsv = await response.text();
   problems = tsv.trim().split("\n").map((line) => {
     const [en, jaStr] = line.split("\t");
     const ja = jaStr.split("|").slice(0, 3).join("\n");
