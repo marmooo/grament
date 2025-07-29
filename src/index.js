@@ -71,10 +71,6 @@ function createAudioContext() {
 }
 
 function unlockAudio() {
-  const uttr = new SpeechSynthesisUtterance("");
-  uttr.lang = "en-Us";
-  speechSynthesis.speak(uttr);
-
   if (audioContext) {
     audioContext.resume();
   } else {
@@ -376,6 +372,7 @@ function selectable() {
 }
 
 function countdown() {
+  loopVoice("Ready", 1); // unlock
   wordsCount = problemCount = errorCount = 0;
   if (localStorage.getItem("bgm") == 1) bgm.play();
   countPanel.classList.remove("d-none");
@@ -404,10 +401,9 @@ function countdown() {
   }, 1000);
 }
 
-async function startGame() {
+function startGame() {
   clearInterval(gameTimer);
   initTime();
-  await loadProblems();
   countdown();
 }
 
@@ -452,7 +448,9 @@ function changeMode(event) {
   }
 }
 
-new Collapse(document.getElementById("courseOption"), { toggle: false });
+await loadProblems();
+
+new Collapse(courseOption, { toggle: false });
 mode.onclick = changeMode;
 document.getElementById("toggleDarkMode").onclick = toggleDarkMode;
 document.getElementById("toggleBGM").onclick = toggleBGM;
@@ -461,5 +459,10 @@ document.getElementById("answerButton").onclick = showAnswer;
 document.getElementById("voice").onclick = () => {
   loopVoice(answer.textContent, 1);
 };
+courseOption.addEventListener("change", async () => {
+  initTime();
+  clearInterval(gameTimer);
+  await loadProblems();
+});
 document.addEventListener("click", unlockAudio, { once: true });
 document.addEventListener("keydown", unlockAudio, { once: true });
