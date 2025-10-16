@@ -1,4 +1,5 @@
 import { Collapse } from "https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/+esm";
+import { createWorker } from "https://cdn.jsdelivr.net/npm/emoji-particle@0.0.4/+esm";
 
 const playPanel = document.getElementById("playPanel");
 const infoPanel = document.getElementById("infoPanel");
@@ -12,11 +13,14 @@ const courseOption = document.getElementById("courseOption");
 const resultNode = document.getElementById("result");
 const gameTime = 120;
 const mode = document.getElementById("mode");
+const emojiParticle = initEmojiParticle();
+const maxParticleCount = 10;
 let gameTimer;
 // https://dova-s.jp/bgm/play16041.html
 const bgm = new Audio("mp3/bgm.mp3");
 bgm.volume = 0.1;
 bgm.loop = true;
+let consecutiveWins = 0;
 let wordsCount = 0;
 let problemCount = 0;
 let errorCount = 0;
@@ -182,6 +186,30 @@ function loopVoice(text, n) {
   speechSynthesis.speak(msg);
 }
 
+function initEmojiParticle() {
+  const canvas = document.createElement("canvas");
+  Object.assign(canvas.style, {
+    position: "fixed",
+    pointerEvents: "none",
+    top: "0px",
+    left: "0px",
+  });
+  canvas.width = document.documentElement.clientWidth;
+  canvas.height = document.documentElement.clientHeight;
+  document.body.prepend(canvas);
+
+  const offscreen = canvas.transferControlToOffscreen();
+  const worker = createWorker();
+  worker.postMessage({ type: "init", canvas: offscreen }, [offscreen]);
+
+  globalThis.addEventListener("resize", () => {
+    const width = document.documentElement.clientWidth;
+    const height = document.documentElement.clientHeight;
+    worker.postMessage({ type: "resize", width, height });
+  });
+  return { canvas, offscreen, worker };
+}
+
 async function loadProblems() {
   const course = courseOption.radio.value;
   const response = await fetch(`data/${course}.tsv`);
@@ -194,6 +222,16 @@ async function loadProblems() {
 }
 
 function nextProblem() {
+  for (let i = 0; i < Math.min(consecutiveWins, maxParticleCount); i++) {
+    emojiParticle.worker.postMessage({
+      type: "spawn",
+      options: {
+        particleType: "popcorn",
+        originX: Math.random() * emojiParticle.canvas.width,
+        originY: Math.random() * emojiParticle.canvas.height,
+      },
+    });
+  }
   playAudio("correct", 0.3);
   wordsCount = 0;
   problemCount += 1;
@@ -271,8 +309,10 @@ function selectableWordClickEvent(event) {
         return e.dataset.id.split(",").some((id) => i == parseInt(id));
       });
       if (correctAll) {
+        consecutiveWins += 1;
         nextProblem();
       } else {
+        consecutiveWins = 0;
         mistaken = true;
         playAudio("incorrect", 0.3);
       }
@@ -373,7 +413,6 @@ function selectable() {
 
 function countdown() {
   loopVoice("Ready", 1); // unlock
-  wordsCount = problemCount = errorCount = 0;
   if (localStorage.getItem("bgm") == 1) bgm.play();
   countPanel.classList.remove("d-none");
   infoPanel.classList.add("d-none");
@@ -392,6 +431,8 @@ function countdown() {
       counter.textContent = t;
     } else {
       clearInterval(timer);
+      wordsCount = problemCount = errorCount = 0;
+      consecutiveWins = 0;
       countPanel.classList.add("d-none");
       infoPanel.classList.remove("d-none");
       playPanel.classList.remove("d-none");
